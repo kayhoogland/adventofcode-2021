@@ -10,15 +10,15 @@ proc createTable(inputSeq: seq[string]): Table[int, seq[char]] =
   return table
 
 proc calcMostCommon(chars: seq[char], favor: char): tuple[most: char, least: char] =
-    var zero, one: int
-    zero = countIt(chars, it == '0')
-    one = countIt(chars, it == '1')
-    if zero > one:
-      return ('0', '1')
-    elif one > zero:
-      return ('1', '0')
-    else:
-      return ('1', '0')
+  var zero, one: int
+  zero = countIt(chars, it == '0')
+  one = countIt(chars, it == '1')
+  if zero > one:
+    return ('0', '1')
+  elif one > zero:
+    return ('1', '0')
+  else:
+    return ('1', '0')
 
 proc dropOnChar(input: seq[string], c: char, col: int): seq[string] =
   result = @[]
@@ -31,9 +31,9 @@ proc part1(inputSeq: seq[string]): int =
   var gamma, epsilon: string
   var table = createTable(inputSeq)
   for i in 0..<toSeq(table.keys).len:
-      var t = table[i].calcMostCommon('1')
-      gamma.add(t.most)
-      epsilon.add(t.least)
+    var t = table[i].calcMostCommon('1')
+    gamma.add(t.most)
+    epsilon.add(t.least)
 
   return parseBinInt(gamma) * parseBinInt(epsilon)
 
@@ -41,22 +41,22 @@ proc generator(inputSeq: seq[string]): string =
   var inputSeq = inputSeq
   var table = createTable(inputSeq)
   for i in 0..<toSeq(table.keys).len:
-      var t = table[i].calcMostCommon('1')
-      inputSeq = inputSeq.dropOnChar(t.most, i)
-      table = createTable(inputSeq)
-      if inputSeq.len == 1:
-        return inputSeq[0]
+    var t = table[i].calcMostCommon('1')
+    inputSeq = inputSeq.dropOnChar(t.most, i)
+    table = createTable(inputSeq)
+    if inputSeq.len == 1:
+      return inputSeq[0]
 
 proc scrubber(inputSeq: seq[string]): string =
   var inputSeq = inputSeq
   var table = createTable(inputSeq)
   for i in 0..<toSeq(table.keys).len:
-      var t = table[i].calcMostCommon('0')
-      inputSeq = inputSeq.dropOnChar(t.least, i)
-      table = createTable(inputSeq)
-      if inputSeq.len == 1:
-        return inputSeq[0]
-  
+    var t = table[i].calcMostCommon('0')
+    inputSeq = inputSeq.dropOnChar(t.least, i)
+    table = createTable(inputSeq)
+    if inputSeq.len == 1:
+      return inputSeq[0]
+
 
 proc part2(inputSeq: seq[string]): int =
   var
@@ -68,7 +68,7 @@ proc part2(inputSeq: seq[string]): int =
 proc solve(input: string): (int, int) =
   var inputSeq = toSeq(input.lines)
   result[0] = part1(inputSeq)
-  result[1] =  part2(inputSeq)
+  result[1] = part2(inputSeq)
 
 
 

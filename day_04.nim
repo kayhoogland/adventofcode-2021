@@ -39,27 +39,27 @@ proc checkBingo(card: Card, drawnNumbers: seq[int]): int =
   return 0
 
 proc part1(allNumbers: seq[int], cards: seq[Card]): int =
-    var drawnNumbers: seq[int] = @[]
-    for i in allNumbers:
-      drawnNumbers.add(i)
-      for c in cards:
-        let score = c.checkBingo(drawnNumbers)
-        if score > 0:
-          return score
+  var drawnNumbers: seq[int] = @[]
+  for i in allNumbers:
+    drawnNumbers.add(i)
+    for c in cards:
+      let score = c.checkBingo(drawnNumbers)
+      if score > 0:
+        return score
 
 proc part2(allNumbers: seq[int], cards: seq[Card]): int =
-    var
-      drawnNumbers: seq[int] = @[]
-      skipCards: seq[int] = @[]
-    for n in allNumbers:
-      drawnNumbers.add(n)
-      for i, c in cards:
-        if i in skipCards: continue
-        let score = c.checkBingo(drawnNumbers)
-        if score > 0:
-          skipCards.add(i)
-        if cards.len == skipCards.len:
-          return cards[skipCards[^1]].calcScore(drawnNumbers)
+  var
+    drawnNumbers: seq[int] = @[]
+    skipCards: seq[int] = @[]
+  for n in allNumbers:
+    drawnNumbers.add(n)
+    for i, c in cards:
+      if i in skipCards: continue
+      let score = c.checkBingo(drawnNumbers)
+      if score > 0:
+        skipCards.add(i)
+      if cards.len == skipCards.len:
+        return cards[skipCards[^1]].calcScore(drawnNumbers)
 
 
 let
