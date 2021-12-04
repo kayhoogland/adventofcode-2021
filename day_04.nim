@@ -31,7 +31,6 @@ proc calcScore(card: Card, drawnNumbers: seq[int]): int =
 
 proc checkBingo(card: Card, drawnNumbers: seq[int]): int =
   for c in card.cols.values:
-    if c.len == 0:
     if c.filterIt(it notin drawnNumbers).len == 0:
       return card.calcScore(drawnNumbers)
   for r in card.rows.values:
@@ -45,7 +44,8 @@ proc part1(allNumbers: seq[int], cards: seq[Card]): int =
       drawnNumbers.add(i)
       for c in cards:
         let score = c.checkBingo(drawnNumbers)
-        if score > 0: return score
+        if score > 0:
+          return score
 
 proc part2(allNumbers: seq[int], cards: seq[Card]): int =
     var
