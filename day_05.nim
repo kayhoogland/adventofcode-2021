@@ -1,12 +1,15 @@
-import strscans, sequtils, tables
+import strscans, sequtils, tables, std/algorithm
 
 
 type
-  Point = tuple[x: int, y:int]
+  Point = tuple[x: int, y: int]
   Line = tuple[kind: string, x1: int, y1: int, x2: int, y2: int, points: seq[Point]]
 
 
-proc findStraightPoints(x1: int, y1: int, x2: int, y2:int): seq[Point] =
+proc myCmp(x, y: Point): int =
+  cmp(x.x, y.x)
+
+proc findStraightPoints(x1: int, y1: int, x2: int, y2: int): seq[Point] =
   if x1 == x2:
     var low = min(y1, y2)
     var high = max(y1, y2)
@@ -19,21 +22,14 @@ proc findStraightPoints(x1: int, y1: int, x2: int, y2:int): seq[Point] =
     for i in low..high:
       result.add((i, y1))
 
-proc findDiagonalPoints(x1: int, y1: int, x2: int, y2:int): seq[Point] =
-    var low_x = min(x1, x2)
-    var high_x = max(x1, x2)
-    var y_low_x, y_high_x: int
-    if x1 == low_x:
-      y_low_x = y1
-      y_high_x = y2
+proc findDiagonalPoints(x1: int, y1: int, x2: int, y2: int): seq[Point] =
+  var points: seq[Point] = @[(x1, y1), (x2, y2)]
+  points.sort(myCmp)
+  for i, x in toSeq(points[0].x..points[1].x):
+    if points[0].y > points[1].y:
+      result.add((points[0].x+i, points[0].y-i))
     else:
-      y_low_x = y2
-      y_high_x = y1
-    for i, x in toSeq(low_x..high_x):
-      if y_low_x > y_high_x:
-        result.add((low_x+i, y_low_x-i))
-      else:
-        result.add((low_x+i, y_low_x+i))
+      result.add((points[0].x+i, points[0].y+i))
 
 proc parseLine(line: string): Line =
   var
