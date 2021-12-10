@@ -1,4 +1,4 @@
-import strutils, sequtils, tables, std/deques, std/algorithm, math
+import sequtils, tables, std/deques, std/algorithm, math
 
 type
   PointTable = Table[char, int]
@@ -25,9 +25,8 @@ proc part1(input: string, points: PointTable,
 
 proc part2(input: string, points: PointTable, closing_to_opening: MatchingTable,
     opening_to_closing: MatchingTable): int =
-  var
-    lineScore = initTable[int, int]()
-    correctLines = toSeq(input.lines).mapIt(it.isBadLine(
+  var lineScore = initTable[int, int]()
+  let correctLines = toSeq(input.lines).mapIt(it.isBadLine(
         closing_to_opening)).filterIt(not it.bad)
 
   for index, l in correctLines:
