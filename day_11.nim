@@ -11,9 +11,10 @@ proc inMap(c: Coordinate): bool =
   return true
 
 proc neighbors(c: Coordinate): seq[Coordinate] =
-  return @[(c.x-1, c.y), (c.x+1, c.y), (c.x, c.y-1), (c.x, c.y+1),
-           (c.x-1, c.y-1), (c.x-1, c.y+1), (c.x+1, c.y-1), (c.x+1,
-               c.y+1)].filter(inMap)
+  for x in -1..1:
+    for y in -1..1:
+      result.add((c.x+x, c.y+y))
+  return result.filter(inMap)
 
 proc createMap(input: string): Map =
   for y, line in toSeq(input.lines):
