@@ -47,17 +47,6 @@ proc performStep(map: Map): Map =
     for c in toFlash:
       result = c.updateNeighbors(result)
 
-proc printMap(map: Map): string =
-  for y in 0..9:
-    var printer: seq[string]
-    for x in 0..9:
-      let level = map[(x, y)].level
-      if level == 10:
-        printer.add("x")
-      else:
-        printer.add($level)
-    echo printer.join("")
-
 proc solve(map: Map): (int, int) =
   var
     map = map
