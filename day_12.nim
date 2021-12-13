@@ -17,7 +17,7 @@ proc isLower(s: string): bool =
 
 proc canVisit(edges: Edges, visited: CountTable[string], small_caves: seq[
     string], node: string): bool =
-  if not node.isLower or node notin visited:
+  if node notin small_caves or node notin visited:
     return true
 
   return small_caves.filterIt(visited[it] > 1).len == 0
@@ -38,7 +38,7 @@ proc part2(edges: Edges, visited: CountTable[string] = initCountTable[string](),
     small_caves: seq[string], start: string = "start"): int =
   if start == "end":
     return 1
-  if start == "start" and visited.len > 0:
+  if start == "start" and start in visited:
     return 0
 
   var visited = visited
