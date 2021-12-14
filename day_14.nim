@@ -33,8 +33,7 @@ proc solve(s: string, mapper: Mapper): (int, int) =
         new_pair_counts.inc(new_key1, v)
         new_pair_counts.inc(new_key2, v)
         char_counts.inc(value_to_add, v)
-      else:
-        new_pair_counts.inc(k, v)
+
     pair_counts = new_pair_counts
 
     if i == 10:
