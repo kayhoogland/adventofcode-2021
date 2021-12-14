@@ -25,14 +25,13 @@ proc solve(s: string, mapper: Mapper): (int, int) =
   for i in 1..40:
     var new_pair_counts = initCountTable[string]()
     for k, v in pair_counts.pairs:
-      if k in mapper:
-        let
-          value_to_add = mapper[k]
-          new_key1 = &"{k[0]}{value_to_add}"
-          new_key2 = &"{value_to_add}{k[1]}"
-        new_pair_counts.inc(new_key1, v)
-        new_pair_counts.inc(new_key2, v)
-        char_counts.inc(value_to_add, v)
+      let
+        value_to_add = mapper[k]
+        new_key1 = &"{k[0]}{value_to_add}"
+        new_key2 = &"{value_to_add}{k[1]}"
+      new_pair_counts.inc(new_key1, v)
+      new_pair_counts.inc(new_key2, v)
+      char_counts.inc(value_to_add, v)
 
     pair_counts = new_pair_counts
 
